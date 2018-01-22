@@ -34,12 +34,13 @@ rm(list=ls())
 
 # loading dominance data
 
-dominance<-read.table("001/rank.TLandM.VB.fitness.csv",sep=",",header=TRUE)
+#dominance<-read.table("001/rank.TLandM.VB.fitness.sex.csv",sep=",",header=TRUE)
+dominance<-read.table("001/rank.TLandM.VB.fitness_sim.csv",sep=",",header=TRUE)
 #Data <- as.data.frame(Data
 
 # loading the Lundy pedigree
 
-Ped <- read.table("001/PedigreeUpToIncl2015-versionwithNA.txt",sep="\t",header=TRUE)
+Ped <- read.table("Pedigree/PedigreeUpToIncl2016-mysterydissapear_versionwithNA.txt",sep="\t",header=TRUE)
 
 
 ########################################################################################################
@@ -50,7 +51,7 @@ Ped <- read.table("001/PedigreeUpToIncl2015-versionwithNA.txt",sep="\t",header=T
 
 dominance <- dominance[,c("BirdID_eventSW","BirdID","StElo",
                           "eventSW","sex","cohort","age",
-                          "tarsus","season")]
+                          "tarsus","season","elo.z.event")]
 
 
 # animal is needed for calling pedigree from MCMCglmm
@@ -78,7 +79,7 @@ dominance$inped <- ifelse((dominance$BirdID %in% Ped.id),
                           1,
                           0)
 
-#dominance <- subset(dominance,dominance$inped==1)
+dominance <- subset(dominance,dominance$inped==1)
 
 
 # Formatting some variables
@@ -111,6 +112,9 @@ BroodRef.2 <- BroodRef[!(is.na(BroodRef$BroodRef)),]
 
 
 # Second, getting FosterBroodRef
+
+# SELECT tblBirdID.BirdID, tblFosterBroods.FosterBrood
+# FROM tblBirdID INNER JOIN tblFosterBroods ON tblBirdID.BirdID = tblFosterBroods.BirdID;
 
 FosterBroodRef <- read.table("001/BirdID_FosterBroodRef.csv",
                              sep=",",header=TRUE)
@@ -250,7 +254,8 @@ h2dominance <- merge(dominance.brood.parents.nb,
 
 
 h2dominance <- h2dominance[,c("BirdID","sex","cohort","tarsus",
-                              "BirdID_eventSW","eventSW","season","StElo","age",
+                              "BirdID_eventSW","eventSW","season","StElo",
+                              "elo.z.event","age",
                               "BroodRef","FosterBrood","SocialBroodRef","xfoster",
                               "SocialDadID","SocialDadCertain",
                               "SocialMumID","SocialMumCertain",
