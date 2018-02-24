@@ -418,10 +418,10 @@ lines(c(mean(model1.1$VCV[,"BirdID"]/model1.1.VP),
         mean(model1.1$VCV[,"BirdID"]/model1.1.VP)),
       c(0,6.2),lwd=2)
 
-title(xlab = "proportion of variance",
+title(xlab = "proportion of phenotypic variance explained",
       outer = TRUE,
       line=2,
-      cex.lab=3.25)
+      cex.lab=2.75)
 
 text(0.5,6,"(b)")
 
@@ -1056,10 +1056,10 @@ axis(2,at=seq(0,800,100),
 #polygon(d.dam, col="grey75", border="black")
 
 
-title(xlab = "proportion of variance",
+title(xlab = "proportion of phenotypic variance explained",
       outer = TRUE,
       line=2,
-      cex.lab=3.25)
+      cex.lab=2.75)
 
 text(0.5,800,"(b)")
 
